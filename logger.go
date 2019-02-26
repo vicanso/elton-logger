@@ -58,6 +58,9 @@ const (
 
 	kbytes = 1024
 	mbytes = 1024 * 1024
+
+	// CommonFormat common log format
+	CommonFormat = "{real-ip} {when-iso} {method} {uri} {status}"
 )
 
 type (
