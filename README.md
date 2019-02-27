@@ -1,5 +1,6 @@
 # cod-logger
 
+[![Build Status](https://img.shields.io/travis/vicanso/cod-logger.svg?label=linux+build)](https://travis-ci.org/vicanso/cod-logger)
 
 Access logger for cod, it support multiple tags from request and response.
 
