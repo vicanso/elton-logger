@@ -260,6 +260,14 @@ func format(c *cod.Context, tags []*Tag, startedAt time.Time) string {
 	return strings.Join(arr, "")
 }
 
+// GenerateLog generate log function
+func GenerateLog(layout string) func(*cod.Context, time.Time) string {
+	tags := parse([]byte(layout))
+	return func(c *cod.Context, startedAt time.Time) string {
+		return format(c, tags, startedAt)
+	}
+}
+
 // New create a logger middleware
 func New(config Config) cod.Handler {
 	if config.Format == "" {
