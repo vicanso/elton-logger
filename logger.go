@@ -22,7 +22,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/vicanso/cod"
+	"github.com/vicanso/elton"
 )
 
 const (
@@ -70,12 +70,12 @@ type (
 		data     string
 	}
 	// OnLog on log function
-	OnLog func(string, *cod.Context)
+	OnLog func(string, *elton.Context)
 	// Config logger config
 	Config struct {
 		Format  string
 		OnLog   OnLog
-		Skipper cod.Skipper
+		Skipper elton.Skipper
 	}
 )
 
@@ -171,7 +171,7 @@ func parse(desc []byte) []*Tag {
 }
 
 // format 格式化访问日志信息
-func format(c *cod.Context, tags []*Tag, startedAt time.Time) string {
+func format(c *elton.Context, tags []*Tag, startedAt time.Time) string {
 	fn := func(tag *Tag) string {
 		switch tag.category {
 		case host:
@@ -261,15 +261,15 @@ func format(c *cod.Context, tags []*Tag, startedAt time.Time) string {
 }
 
 // GenerateLog generate log function
-func GenerateLog(layout string) func(*cod.Context, time.Time) string {
+func GenerateLog(layout string) func(*elton.Context, time.Time) string {
 	tags := parse([]byte(layout))
-	return func(c *cod.Context, startedAt time.Time) string {
+	return func(c *elton.Context, startedAt time.Time) string {
 		return format(c, tags, startedAt)
 	}
 }
 
 // New create a logger middleware
-func New(config Config) cod.Handler {
+func New(config Config) elton.Handler {
 	if config.Format == "" {
 		panic("logger require format")
 	}
@@ -279,9 +279,9 @@ func New(config Config) cod.Handler {
 	tags := parse([]byte(config.Format))
 	skipper := config.Skipper
 	if skipper == nil {
-		skipper = cod.DefaultSkipper
+		skipper = elton.DefaultSkipper
 	}
-	return func(c *cod.Context) (err error) {
+	return func(c *elton.Context) (err error) {
 		if skipper(c) {
 			return c.Next()
 		}

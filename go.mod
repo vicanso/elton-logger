@@ -1,3 +1,5 @@
-module github.com/vicanso/cod-logger
+module github.com/vicanso/elton-logger
 
-require github.com/vicanso/cod v0.0.2
+go 1.12
+
+require github.com/vicanso/elton v0.2.0
